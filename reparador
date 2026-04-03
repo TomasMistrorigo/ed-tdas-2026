@@ -1,0 +1,4 @@
+git config --global user.name "Tomas Mistrorigo"
+git config --global user.email "tomas@email.com"
+
+para solucionar el error de no dejar subir los archivos
