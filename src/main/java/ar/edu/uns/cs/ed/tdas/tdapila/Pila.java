@@ -51,3 +51,7 @@ public class Pila<E> implements Stack<E> {
     }
 
 }
+
+//Implemente todas las clases e interfaces necesarias para programar el TDAPila utilizando un arreglo
+//genérico de tipo E. Tenga en cuenta que la pila nunca se puede llenar. Ejecute el correspondiente tester JUnit probar
+//su correctitud.
