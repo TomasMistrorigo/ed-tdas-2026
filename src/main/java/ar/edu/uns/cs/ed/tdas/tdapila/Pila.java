@@ -7,9 +7,9 @@ public class Pila<E> implements Stack<E> {
     private int tamanio;
     private E[] pila;
 
-    public Pila(int max){
+    public Pila(){
         tamanio=0;
-        pila= (E[]) new Object[max];
+        pila= (E[]) new Object[20];
     }
 
     @Override
