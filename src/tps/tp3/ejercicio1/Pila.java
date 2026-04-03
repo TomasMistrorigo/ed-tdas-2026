@@ -1,5 +1,6 @@
-package ar.edu.uns.cs.ed.tdas.tdapila;
+package tp3.ejercicio1;
 import ar.edu.uns.cs.ed.tdas.excepciones.EmptyStackException;
+import ar.edu.uns.cs.ed.tdas.tdapila.Stack;
 
 //TP 3 ejercicio 1
 

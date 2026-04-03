@@ -1,6 +1,7 @@
-package ar.edu.uns.cs.ed.tdas.tdacola;
+package tp3.ejercicio2;
 
 import ar.edu.uns.cs.ed.tdas.excepciones.EmptyQueueException;
+import ar.edu.uns.cs.ed.tdas.tdacola.Queue;
 
 //TP 3 ejercicio 2
 

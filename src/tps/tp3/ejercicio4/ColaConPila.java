@@ -14,6 +14,23 @@ public class ColaConPila<E> implements Queue<E>{
     @Override
     public int size(){return cant;}
 
+    @Override
+    public boolean isEmpty(){return cant==0;}
+
+    @Override
+    public E front(){
+
+    }
+
+    @Override
+    public void enqueue(E element){
+
+    }
+
+    @Override
+    public E dequeue(){
+        
+    }
 }
 
 //Programe una clase llamada ColaConPila que implemente la interfaz Queue<E> provista por la cátedra utilizando una

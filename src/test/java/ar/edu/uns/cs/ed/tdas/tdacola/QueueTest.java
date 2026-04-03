@@ -1,6 +1,7 @@
 package ar.edu.uns.cs.ed.tdas.tdacola;
 
 import ar.edu.uns.cs.ed.tdas.excepciones.EmptyQueueException;
+import tp3.ejercicio2.Cola;
 
 import static org.junit.Assert.*;
 import org.junit.*;

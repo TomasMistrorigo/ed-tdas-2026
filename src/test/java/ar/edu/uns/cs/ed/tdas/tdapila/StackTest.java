@@ -12,6 +12,7 @@ import org.junit.*;                         //For tags
 import static org.junit.Assert.*;           //For assertions
 
 import ar.edu.uns.cs.ed.tdas.excepciones.EmptyStackException;
+import tp3.ejercicio1.Pila;
 
 public class StackTest {
 	private Stack<String> s; //interface
