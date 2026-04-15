@@ -15,10 +15,12 @@ public class Tester {
         p2.push(5);
         p2.push(6);
 
-        System.out.println("Primer ejemplo...");
-        System.out.println("Pila 1: "+p1);
-        System.out.println("Pila 2: "+p2);
-        System.out.println("Pila intercalada: "+IntercaladorPilas.intercalar(p1, p2));
+        
+        System.out.println("Pila intercalada 1: ");
+        Pila<Integer> intercaladas=IntercaladorPilas.intercalar(p1, p2);
+        while(intercaladas.size()>0){
+            System.out.println(intercaladas.pop());
+        }
         
         
         p1.push(1);
@@ -30,10 +32,11 @@ public class Tester {
         p2.push(6);
         p2.push(1);
 
-        System.out.println("Segundo ejemplo...");
-        System.out.println("Pila 1: "+p1);
-        System.out.println("Pila 2: "+p2);
-        System.out.println("Pila intercalada: "+IntercaladorPilas.intercalar(p1, p2));
+        System.out.println("Pila intercalada 2: ");
+        intercaladas=IntercaladorPilas.intercalar(p1, p2);
+        while(intercaladas.size()>0){
+            System.out.println(intercaladas.pop());
+        }
 
     }
 }

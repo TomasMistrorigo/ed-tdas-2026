@@ -13,9 +13,11 @@ public class Tester {
 
         System.out.println("Probando 1er ejemplo...");
         System.out.println();
-        System.out.println("Cola antes de buscar el mayor elemento: "+cola);
         System.out.println("Mayor elemento: "+mayorCola.mayorValor(cola));
-        System.out.println("Cola despues de buscar el mayor elemento: "+cola);
+        System.out.println("Cola despues de buscar el mayor elemento: ");
+        while(cola.size()>0){
+            System.out.print(cola.dequeue());
+        }
 
         cola.enqueue(10);
         cola.enqueue(5);
@@ -26,9 +28,10 @@ public class Tester {
         System.out.println();
         System.out.println("Probando 2do ejemplo...");
         System.out.println();
-        System.out.println("Cola antes de buscar el mayor elemento: "+cola);
         System.out.println("Mayor elemento: "+mayorCola.mayorValor(cola));
-        System.out.println("Cola despues de buscar el mayor elemento: "+cola);
-
+        System.out.println("Cola despues de buscar el mayor elemento: ");
+        while(cola.size()>0){
+            System.out.print(cola.dequeue());
+        }
     }
 }

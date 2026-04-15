@@ -13,7 +13,7 @@ public class mayorCola {
         while(!q.isEmpty()){    
             if(q.front()>mayor.top())
                 mayor.push(q.front());
-            copia.enqueue(q.front());
+            copia.enqueue(q.dequeue());
         }
         while(!copia.isEmpty())
             q.enqueue(copia.dequeue());
