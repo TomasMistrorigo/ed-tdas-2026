@@ -12,7 +12,6 @@ public class DNodo<E> implements Position<E>{
         prev=null;
     }
 
-    public E getElement(){return element;}
     public void setElement(E element){
         this.element=element;
     }
