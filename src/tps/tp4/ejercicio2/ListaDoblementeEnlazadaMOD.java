@@ -1,23 +1,45 @@
-package tp4.ejercicio1;
+package tp4.ejercicio2;
 
 import ar.edu.uns.cs.ed.tdas.tdalista.PositionList;
+import tp4.ejercicio1.DNodo;
+import tp4.ejercicio1.ListaDoblementeEnlazada;
 import ar.edu.uns.cs.ed.tdas.Position;
 import ar.edu.uns.cs.ed.tdas.excepciones.EmptyListException;
 import ar.edu.uns.cs.ed.tdas.excepciones.InvalidPositionException;
 import ar.edu.uns.cs.ed.tdas.excepciones.BoundaryViolationException;
 import java.util.Iterator;
+import tp4.ejercicio1.ElementIterator;
 
-public class ListaDoblementeEnlazada<E> implements PositionList<E>{
+
+public class ListaDoblementeEnlazadaMOD<E> implements PositionList<E> {
     protected DNodo<E> head;
     protected DNodo<E> tail;
     protected int tamanio;
 
-    public ListaDoblementeEnlazada(){
+    public ListaDoblementeEnlazadaMOD(){
         head=new DNodo(null);
         tail=new DNodo(null);
         head.setNext(tail);
         tail.setPrev(head);
         tamanio=0;
+    }
+
+
+/*Agregue un método a la lista programada en el ejercicio 1 tal que reciba dos elementos, e1 y e2, y modifique la lista
+receptora del mensaje de la siguiente manera:
+    ● Deberá agregar a e1 como segundo elemento de la lista;
+    ● Deberá agregar a e2 como ante-último elemento de la lista;
+Considera casos especiales: ¿Qué sucede si la lista está vacía?, ¿Qué sucede si la lista tiene un elemento?. Recuerde
+que tiene total acceso a la estructura. */
+
+    public void segundoYanteUltimo(E e1,E e2){
+        if(isEmpty()){
+            addFirst(e2);
+            addLast(e1);
+        } else{
+            addAfter(head.getNext(),e1);
+            addBefore(tail.getPrev(),e2);
+        }
     }
 
     @Override
