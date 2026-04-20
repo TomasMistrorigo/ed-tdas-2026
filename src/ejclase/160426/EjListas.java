@@ -19,6 +19,7 @@ public class EjListas {
 
         System.out.println(result);
     }
+    
     public <E> int ejercicio1(E elem, PositionList<E> lin){
         int result=0;
         if(elem==null){
