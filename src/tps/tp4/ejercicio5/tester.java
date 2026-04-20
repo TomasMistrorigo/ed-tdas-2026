@@ -21,9 +21,29 @@ public class tester {
         l2.addLast('e');
         l2.addLast('a');
 
+        System.out.println("Lista 1");
+        for(Character element:l1){
+            System.out.print(element+" ");
+        }
+
+        System.out.println();
+        System.out.println("Lista 2");
+        for(Character element:l2){
+            System.out.print(element+" ");
+        }
+
+        System.out.println();
+        System.out.println("Iterable de los elementos eliminados de la Lista 2");
         Iterator<Character> it=ej5.eliminados(l1,l2);
         while(it.hasNext()){
             System.out.print(it.next()+" ");
         }
+
+        System.out.println();
+        System.out.println("Lista 2 despues de generar el iterador");
+        for(Character element:l2){
+            System.out.print(element+" ");
+        }
+
     }
 }

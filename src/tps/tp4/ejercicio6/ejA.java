@@ -10,16 +10,18 @@ public class ejA {
         PositionList<E> rta=new ListaDoblementeEnlazada<>();
         
         if(L1==null || L2==null){
-            throw new NullPointerException("No puedo intercalar con una lista vacia");
-        }
-        
-        Iterator<E> it1=L1.iterator();
-        Iterator<E> it2=L2.iterator();
-        while(it1.hasNext() || it2.hasNext()){
-            if(it1.hasNext())
-                rta.addLast(it1.next());
-            if(it2.hasNext())
-                rta.addLast(it2.next());
+            if(L1==null)
+                rta=L2;
+            else rta=L1;
+        } else{        
+            Iterator<E> it1=L1.iterator();
+            Iterator<E> it2=L2.iterator();
+            while(it1.hasNext() || it2.hasNext()){
+                if(it1.hasNext())
+                    rta.addLast(it1.next());
+                if(it2.hasNext())
+                    rta.addLast(it2.next());
+            }
         }
         return rta;
     }

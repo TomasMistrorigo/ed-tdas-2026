@@ -13,8 +13,8 @@ public class ListaDoblementeEnlazada<E> implements PositionList<E>{
     protected int tamanio;
 
     public ListaDoblementeEnlazada(){
-        head=new DNodo(null);
-        tail=new DNodo(null);
+        head=new DNodo<>(null);
+        tail=new DNodo<>(null);
         head.setNext(tail);
         tail.setPrev(head);
         tamanio=0;
