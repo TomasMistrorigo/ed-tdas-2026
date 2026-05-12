@@ -45,6 +45,21 @@ public class MapeoHashAbierto<K,V> implements Map<K,V>{
         return rta;
     }
 
+    private void rehashing(){
+        PositionList<Entry<K,V>>[]vieja=A;
+        buckets=buckets*2;
+        A=(PositionList<Entry<K,V>>[]) new PositionList[buckets];
+        for(int i=0;i<buckets;i++)
+            A[i]=new ListaDoblementeEnlazada<Entry<K,V>>();
+        entradas=0;
+        
+        for(int i=0;i<vieja.length;i++){
+            for(Entry<K,V> e:vieja[i]){
+                put(e.getKey(),e.getValue());
+            }
+        }
+    }
+
     @Override
     public V put(K key,V value){
         if(key==null) throw new InvalidKeyException("Clave nula");
@@ -66,6 +81,8 @@ public class MapeoHashAbierto<K,V> implements Map<K,V>{
             A[hCode].addLast(new Entrada(key,value));
             entradas++;
         }
+        
+        if((double)entradas/buckets >= 0.75) rehashing();
 
         return rta;
     }
