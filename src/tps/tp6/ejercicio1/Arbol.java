@@ -63,7 +63,7 @@ public class Arbol<E> implements Tree<E>{
         if(p==null) throw new InvalidPositionException("Posicion nula");
         if(size==0) throw new InvalidPositionException("Arbol vacio");
 
-        TNodo<E> rta;
+        TNodo<E> rta=null;
         try {
             rta=(TNodo<E>) p;
         } catch (ClassCastException e) {
