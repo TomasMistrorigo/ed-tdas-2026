@@ -44,11 +44,18 @@ public class Arbol<E> implements Tree<E>{
 
     @Override
     public Iterable<Position<E>> positions(){
-        PositionList<E> rta=new ListaDoblementeEnlazada<>();
+        PositionList<Position<E>> rta=new ListaDoblementeEnlazada<>();
         if(!isEmpty()){
-            preOrden(raiz,rta);
+            preOrdenPosiciones(raiz,rta);
         }
-        return rta.positions();
+        return rta;
+    }
+
+    private void preOrdenPosiciones(TNodo<E> elem,PositionList<Position<E>> l){
+        l.addLast(elem);
+        for(TNodo<E> e:elem.getHijos()){
+            preOrdenPosiciones(e,l);
+        }
     }
 
     @Override
@@ -141,40 +148,44 @@ public class Arbol<E> implements Tree<E>{
 
     @Override
     public Position<E> addBefore(Position<E> p,Position<E> rb,E e){
-        TNodo<E> nodo=checkPosition(p);
-        TNodo<E> hijo=checkPosition(rb);
-        TNodo<E> nuevoHijo=new TNodo<E>(e,nodo);
-        Position<TNodo<E>> posrb=nodo.getHijos().first();
-        boolean encontre=false;
-        while(posrb!=null && !encontre){
-            if(hijo==posrb.element())
-                encontre=true;
-            else
-                posrb=(posrb!=nodo.getHijos().last() ? nodo.getHijos().next(posrb):null);
+        TNodo<E> n = checkPosition( p );
+        TNodo<E> hd = checkPosition( rb );
+        TNodo<E> nuevo = new TNodo<E>( e, n ); // Conecto el nodo nuevo con el padre
+        PositionList<TNodo<E>> hijos = n.getHijos();
+        if(hijos.isEmpty()) throw new InvalidPositionException("rb no es hijo de p, p no tiene hijos"); //Excepsion si es que p no tiene hijos
+        // Buscar dónde está rb en la lista de hijos de p
+        boolean encontre = false;
+        Position<TNodo<E>> pp = hijos.first();
+        while( pp != null && !encontre ){
+        // Testeo si el elemento corriente de la lista de hijos de p es rb
+            if( hd == pp.element() ) encontre = true; // Sí, es! => terminé el bucle
+            else pp = (pp != hijos.last() ? hijos.next(pp) : null); // No es => avanzo
         }
-        if(!encontre) throw new InvalidPositionException("rb no es hijo de p");
-        nodo.getHijos().addBefore(posrb, nuevoHijo);
-        size++;
-        return nuevoHijo;
+        if( !encontre ) // => Hay un problema con los argumentos
+            throw new InvalidPositionException( "p no es padre de rb" );
+        hijos.addBefore( pp, nuevo ); // Inserto al nodo nuevo delante de rb
+        size++; // Incremento el tamaño del árbol
+        return nuevo; // Retorno el nodo creado
     }
 
     @Override
     public Position<E> addAfter(Position<E> p, Position<E> lb, E e){
-        TNodo<E> nodo=checkPosition(p);
-        TNodo<E> hijo=checkPosition(lb);
-        TNodo<E> nuevoHijo=new TNodo<E>(e,nodo);
-        Position<TNodo<E>> poslb=nodo.getHijos().first();
+        TNodo<E> padre=checkPosition(p);
+        TNodo<E> hi=checkPosition(lb);
+        TNodo<E> nuevo=new TNodo<E>(e,padre);
+        PositionList<TNodo<E>> hijos=padre.getHijos();
+        if(hijos.isEmpty()) throw new InvalidPositionException("p no tiene hijos");
+
         boolean encontre=false;
-        while(poslb!=null && !encontre){
-            if(hijo==poslb.element())
-                encontre=true;
-            else
-                poslb=(poslb!=nodo.getHijos().last() ? nodo.getHijos().next(poslb):null);
+        Position<TNodo<E>> pp=hijos.first();
+        while(pp!=null && !encontre){
+            if(pp.element()==hi) encontre=true;
+            else pp=(pp!=hijos.last() ? hijos.next(pp) : null);
         }
-        if(!encontre) throw new InvalidPositionException("rb no es hijo de p");
-        nodo.getHijos().addAfter(poslb, nuevoHijo);
+        if(!encontre) throw new InvalidPositionException("p no es padre de lb");
+        hijos.addAfter(pp, nuevo);
         size++;
-        return nuevoHijo;
+        return nuevo;
     }
 
     @Override
@@ -188,14 +199,14 @@ public class Arbol<E> implements Tree<E>{
         Position<TNodo<E>> posP=pos.getPadre().getHijos().first();
         boolean encontre=false;
         while(posP!=null && !encontre){
-            if(posP==pos.element()) 
+            if(posP.element()==pos) 
                 encontre=true;
             else
                 posP=(posP!=pos.getPadre().getHijos().last() ? pos.getPadre().getHijos().next(posP) : null);
         }
         if(!encontre) throw new InvalidPositionException("No encontre pos de p en la lista de su padre");
         pos.getPadre().getHijos().remove(posP);
-        pos=null;
+        pos.setPadre(null);
         size--;
     }
 
@@ -203,19 +214,18 @@ public class Arbol<E> implements Tree<E>{
     public void removeInternalNode(Position<E> p){
         TNodo<E> pos=checkPosition(p);
         if(!isInternal(pos)) throw new InvalidPositionException("La posicion no es Interna");
-        if(p==root()){
+        
+        if(p==raiz){
             if(raiz.getHijos().size()!=1) throw new InvalidPositionException("La posicion es raiz y tiene más de un hijo");
-            else{
-                TNodo<E> nuevaRaiz=raiz.getHijos().first().element();
-                nuevaRaiz.setPadre(null);
-                raiz=nuevaRaiz;
-                size--;
-                return;
-            }
+            TNodo<E> nuevaRaiz=raiz.getHijos().first().element();
+            nuevaRaiz.setPadre(null);
+            raiz=nuevaRaiz;
+            size--;
+            return;
         } 
         
         TNodo<E> padre = pos.getPadre();
-        PositionList<TNodo<E>> hijosPadre =padre.getHijos();
+        PositionList<TNodo<E>> hijosPadre=padre.getHijos();
         Position<TNodo<E>> posNodo = null;
         for(Position<TNodo<E>> e:hijosPadre.positions()){
             if(e.element() == pos){
@@ -223,11 +233,15 @@ public class Arbol<E> implements Tree<E>{
                 break;
             }
         }
-        for(TNodo<E> hijo : pos.getHijos()){
+        while(!pos.getHijos().isEmpty()){
+            TNodo<E> hijo=pos.getHijos().first().element();
+            pos.getHijos().remove(pos.getHijos().first());
             hijo.setPadre(padre);
             hijosPadre.addBefore(posNodo, hijo);
         }
         hijosPadre.remove(posNodo);
+        pos.setPadre(null);
+        pos.setElement(null);
         size--;
     }
 
