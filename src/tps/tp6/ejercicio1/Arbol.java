@@ -233,12 +233,18 @@ public class Arbol<E> implements Tree<E>{
                 break;
             }
         }
+        PositionList<TNodo<E>> aux=new ListaDoblementeEnlazada<>();
         while(!pos.getHijos().isEmpty()){
             TNodo<E> hijo=pos.getHijos().first().element();
             pos.getHijos().remove(pos.getHijos().first());
             hijo.setPadre(padre);
+            aux.addLast(hijo);
+        }
+
+        for(TNodo<E> hijo:aux){
             hijosPadre.addBefore(posNodo, hijo);
         }
+
         hijosPadre.remove(posNodo);
         pos.setPadre(null);
         pos.setElement(null);
@@ -247,7 +253,18 @@ public class Arbol<E> implements Tree<E>{
 
     @Override
     public void removeNode(Position<E> p){
-        if(isExternal(p)) removeExternalNode(p);
-        if(isInternal(p)) removeInternalNode(p);
+        TNodo<E> nodo=checkPosition(p);
+
+        if(nodo==raiz){
+            if(isInternal(nodo)) throw new InvalidPositionException("Raiz Interna");
+            raiz=null;
+            size--;
+            return;
+        }
+        if(isExternal(nodo))
+            removeExternalNode(p);
+        else
+            removeInternalNode(p);
+
     }
 }
