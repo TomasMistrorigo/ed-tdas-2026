@@ -12,7 +12,9 @@ public class Entrada<K,V> implements Entry<K,V> {
     }
 
     //Getters
+    @Override
     public K getKey(){return clave;}
+    @Override
     public V getValue(){return valor;}
 
     //Setters
